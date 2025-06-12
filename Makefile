@@ -43,6 +43,6 @@ terraform-sa:
 	gcloud projects add-iam-policy-binding $(shell cat .projectid.txt) --member="serviceAccount:terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com" --role="roles/owner"
 
 #Create Credential File
-terraform-sa-credentials:
+credentials:
 	gcloud iam service-accounts keys create .interview-credentials.json --iam-account=terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com
 
