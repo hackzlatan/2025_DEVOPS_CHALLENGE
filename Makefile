@@ -34,16 +34,15 @@ destroy:
 
 # Login Gcloud using credentials
 login-gcloud:
-	echo "Logging into GCP using interviewee credentials."
+	echo "Logging into GCP using interviewe credentials."
 	gcloud auth activate-service-account --key-file=infra/.interviewee-creds.json
-
 
 #Create Service Account
 terraform-sa:
-	gcloud iam service-accounts create terraform-sa --description="Cuenta de servicio para Terraform" --display-name="Terraform Service Account"
+	gcloud iam service-accounts create terraform-sa --description="Service Account for Terraform" --display-name="Terraform Service Account"
 	gcloud projects add-iam-policy-binding $(shell cat .projectid.txt) --member="serviceAccount:terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com" --role="roles/owner"
 
-#Create Service Account from file projectid.txt
+#Create Credential File
 terraform-sa-credentials:
-	gcloud iam service-accounts keys create infra/.interviewee-creds.json --iam-account=terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com
+	gcloud iam service-accounts keys create .interview-credentials.json --iam-account=terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com
 
