@@ -35,7 +35,7 @@ destroy:
 # Login Gcloud using credentials
 login-gcloud:
 	echo "Logging into GCP using interviewe credentials."
-	gcloud auth activate-service-account --key-file=.interviewee-creds.json
+	gcloud auth activate-service-account --key-file=.interview-credentials.json
 
 #Create Service Account
 terraform-sa:
