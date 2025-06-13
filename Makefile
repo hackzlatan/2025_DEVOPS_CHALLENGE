@@ -63,7 +63,7 @@ gke-info:
 	kubectl get deployments,services -n default
 
 gke-delete:
-	kubectl delete -f kubernetes/hello-app.yaml pipx run --spec diagrams python draw_gke_arch.py
+	kubectl delete -f kubernetes/hello-app.yaml
 
 diagram_drawing:
-	pipx run --spec diagrams python draw_gke_arch.py
+	cd diagram && pipx run --spec diagrams python draw_gke_arch.py
