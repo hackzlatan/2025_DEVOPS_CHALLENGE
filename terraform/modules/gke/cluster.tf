@@ -1,5 +1,9 @@
 # Create GKE Autopilot cluster with private nodes
 resource "google_container_cluster" "autopilot" {
+  # force this resource to use the beta provider
+  provider = google-beta
+
+  project  = var.project_id
   name     = var.cluster_name
   location = var.region
 
@@ -33,11 +37,5 @@ resource "google_container_cluster" "autopilot" {
     http_load_balancing {
       disabled = false
     }
-  }
-
-  # Enable network policy enforcement
-  network_policy {
-    enabled  = true
-    provider = "CALICO"
   }
 }

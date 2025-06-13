@@ -35,14 +35,32 @@ destroy:
 # Login Gcloud using credentials
 login-gcloud:
 	echo "Logging into GCP using interviewe credentials."
-	gcloud auth activate-service-account --key-file=infra/.interviewee-creds.json
+	gcloud auth activate-service-account --key-file=.interview-credentials.json
 
 #Create Service Account
 terraform-sa:
 	gcloud iam service-accounts create terraform-sa --description="Service Account for Terraform" --display-name="Terraform Service Account"
 	gcloud projects add-iam-policy-binding $(shell cat .projectid.txt) --member="serviceAccount:terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com" --role="roles/owner"
 
+#Grant Permissions to the Service Account
+sa-permissions:	
+	gcloud projects add-iam-policy-binding $(shell cat .projectid.txt) --member="serviceAccount:terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com" --role="roles/owner"
+
+
 #Create Credential File
 credentials:
 	gcloud iam service-accounts keys create .interview-credentials.json --iam-account=terraform-sa@$(shell cat .projectid.txt).iam.gserviceaccount.com
 
+#
+gke-connect:
+	gcloud container clusters get-credentials la-gke --region us-central1 --project devops-462623
+
+gke-deploy:
+	kubectl apply -f kubernetes/hello-app.yaml && kubectl get deployments,services -n default
+
+#Create Credential File
+gke-info:	
+	kubectl get deployments,services -n default
+
+gke-delete:
+	kubectl delete -f kubernetes/hello-app.yaml

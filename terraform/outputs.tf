@@ -1,4 +1,3 @@
-# Root-level outputs
 output "network_id" {
   description = "ID of the created VPC"
   value       = module.network.network_id

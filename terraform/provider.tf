@@ -4,7 +4,6 @@ terraform {
     google = {
       source  = "hashicorp/google"
       version = "~> 4.0"
-      credentials = var.credentials_path
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -14,12 +13,14 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  credentials = var.credentials_path
+  project     = var.project_id
+  region      = var.region
 }
 
-# Use google-beta provider for resources requiring beta features
 provider "google-beta" {
-  project = var.project_id
-  region  = var.region
+  alias       = "beta"
+  credentials = var.credentials_path
+  project     = var.project_id
+  region      = var.region
 }
