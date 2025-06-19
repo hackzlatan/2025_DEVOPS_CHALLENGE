@@ -31,7 +31,7 @@ resource "google_container_cluster" "autopilot" {
   private_cluster_config {
     enable_private_nodes    = true   # Nodes will NOT have public IPs (more secure)
     enable_private_endpoint = false  # API server endpoint remains public (but IAM-secured). If I change this, I could access only with a VPN, bastión o Direct Interconnect
-    master_ipv4_cidr_block  = var.master_ipv4_cidr_block  # Reserved range for control plane to connect privately
+    master_ipv4_cidr_block  = var.master_ipv4_cidr_block  # Reserved range for control plane to connect privately, used for the control plane to stablish connection with the nodes (not visible) and pods in the vpc
   }
 
   # 🌍 Enable HTTP(S) Load Balancer support via built-in Ingress controller
